@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Портфолио | Батько Светлана</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Базовые стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #111;
+            background-color: #f3bbfa;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Навигация */
+        nav {
+            background-color: #c364c5;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        nav ul li {
+            margin: 0 10px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        nav ul li a:hover,
+        nav ul li a.active {
+            background-color: #943391;
+        }
+        
+        /* Основной контент */
+        main {
+            margin-top: 70px;
+            padding: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .section {
+            background-color: #ffe8f2;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #660066;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8rem;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #bd33a4;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        /* Секция "Обо мне" */
+        .content {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #c364c5;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-text p {
+            margin-bottom: 15px;
+        }
+        
+        /* Секция "О колледже" */
+        .education-info p {
+            margin-bottom: 15px;
+        }
+        
+        .education-info a {
+            color: #da70d6;
+            text-decoration: none;
+        }
+        
+        .education-info a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Секция "Достижения" */
+        .achievements-controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+        
+        .course-btn {
+            padding: 10px 25px;
+            background-color: #f3bbfa;
+            border: 1px solid #f3bbfa;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .course-btn.active {
+            background-color: #943391;
+            color: white;
+            border-color: #943391;
+        }
+        
+        .course-btn:hover {
+            background-color: #ba3fb6;
+            color: white;
+            border-color: #ba3fb6;
+        }
+        
+        .course-content {
+            display: none;
+        }
+        
+        .course-content.active {
+            display: block;
+        }
+        
+        /* Галерея изображений */
+        .image-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .gallery-img:hover {
+            transform: scale(1.03);
+        }
+        
+        /* Секция "Контакты" */
+        .contact-info {
+            text-align: center;
+        }
+        
+        .contact-info p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .contact-info a {
+            color: #da70d6;
+            text-decoration: none;
+        }
+        
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Кнопка "Наверх" */
+        #scrollToTopBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #da70d6;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: none;
+            z-index: 999;
+        }
+        
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+        }
+        
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 80%;
+            margin-top: 50px;
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: white;
+            font-size: 35px;
+            cursor: pointer;
+        }
+        
+        #caption {
+            text-align: center;
+            color: white;
+            padding: 10px;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .achievements-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .course-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            .image-container {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+            
+            nav ul li {
+                margin: 5px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            main {
+                padding: 10px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .profile-img {
+                width: 150px;
+                height: 150px;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#about" class="active">Обо мне</a></li>
+            <li><a href="#education">О колледже</a></li>
+            <li><a href="#achievements">Достижения</a></li>
+            <li><a href="#gallery">Галерея</a></li>
+            <li><a href="#contact">Контакты</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="about" class="section">
+            <h2>Обо мне</h2>
+            <div class="content">
+                <img src="главная.jpg" alt="Фото студента" class="profile-img">
+                <div class="about-text">
+                    <p><strong>ФИО:</strong> Батько Светлана Степановна</p>
+                    <p><strong>Группа:</strong> 324</p>
+                    <p><strong>Специальность:</strong> Информационные системы и программирование</p>
+                    <p>Я студентка Амурского педагогического колледжа, осваивающая специальность «Администратор баз данных». В ходе обучения я изучаю проектирование, администрирование и поддержку баз данных, а также смежные IT-дисциплины.</p>
+                    <p>Стремлюсь к профессиональному росту и активно участвую в жизни колледжа, различных мероприятиях и проектах.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="section">
+            <h2>О колледже</h2>
+            <div class="education-info">
+                <h3>ГПОАУ АО "Амурский педагогический колледж"</h3>
+                <p><strong>Полное наименование:</strong> Государственное профессиональное образовательное автономное учреждение Амурской области «Амурский педагогический колледж»</p>
+                <p><strong>Сокращенное наименование:</strong> ГПОАУ АО АПК</p>
+                <p><strong>Адрес сайта:</strong> <a href="https://apk28.ru" target="_blank">apk28.ru</a></p>
+                <p><strong>E-mail:</strong> <a href="mailto:blg_prof_apk@obramur.ru">blg_prof_apk@obramur.ru</a></p>
+                <p><strong>Телефон:</strong> <a href="tel:+74162353094">+7 (4162) 35-30-94</a></p>
+                <p><strong>Год поступления:</strong> 2024</p>
+            </div>
+        </section>
+
+        <section id="achievements" class="section">
+            <h2>Мои достижения</h2>
+            
+            <div class="achievements-controls">
+                <button class="course-btn active" id="firstCourseBtn">
+                    <i class=""></i> 1 курс
+                </button>
+                <button class="course-btn" id="secondCourseBtn">
+                    <i class=""></i> 2 курс
+                </button>
+            </div>
+            
+            <div class="achievements-content">
+                <!-- 1 курс -->
+                <div class="course-content active" id="firstCourseContent">
+                    <h3>Достижения на 1 курсе</h3>
+                    <div class="image-container">
+                        <img src="достижения/фото 1.webp" alt="Сертификат 1" class="gallery-img">
+                        <img src="достижения/фото2.jpg" alt="Диплом" class="gallery-img">
+                        <img src="достижения/фото 3.jpg" alt="Сертификат 2" class="gallery-img">
+                        <img src="достижения/фото 4.webp" alt="Сертификат 3" class="gallery-img">
+                        <img src="достижения/фото 5.jpg" alt="Сертификат 4" class="gallery-img">
+                        <img src="достижения/фото 6.webp" alt="Благодарность" class="gallery-img">
+                        <img src="достижения/фото 7.webp" alt="Грамота" class="gallery-img">
+                        <img src="достижения/фото 8.png" alt="Сертификат 5" class="gallery-img">
+                        <img src="достижения/фото 9.webp" alt="Сертификат 6" class="gallery-img">
+                        <img src="достижения/фото 10.png" alt="Сертификат 7" class="gallery-img">
+                    </div>
+                </div>
+                
+                <!-- 2 курс -->
+                <div class="course-content" id="secondCourseContent">
+                    <h3>Достижения на 2 курсе</h3>
+                    <div class="image-container">
+                        <img src="достижения/фото 11.png" alt="Сертификат 1" class="gallery-img">
+                        <img src="достижения/фото 12.png" alt="Сертификат 2" class="gallery-img">
+                        <img src="достижения/фото 13.png" alt="Сертификат 3" class="gallery-img">
+                        <img src="достижения/фото 14.png" alt="Сертификат 4" class="gallery-img">
+                        <img src="достижения/фото 15.png" alt="Сертификат 5" class="gallery-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="section">
+            <h2>Фотогалерея</h2>
+            <div class="gallery-container">
+                <div class="image-container">
+                    <img src="галерея/фото 1.jpg" alt="Мероприятие 'Спортивный интерес'" class="gallery-img">
+                    <img src="галерея/фото 2.jpg" alt="'От студентов-практикантов к профессионалам будущего!'" class="gallery-img">
+                    <img src="галерея/фото 3.png" alt="Мастер-класс по здоровому образу жизни и занятиям спортом" class="gallery-img">
+                    <img src="галерея/фото 4.jpg" alt="Экскурсия в музей 'Память славы жива'" class="gallery-img">
+                    <img src="галерея/фото 5.jpg" alt="Экскурсия в музей 'Память славы жива'" class="gallery-img">
+                    <img src="галерея/фото 6.jpg" alt="Акция 'Письмо солдату'" class="gallery-img">
+                    <img src="галерея/фото 7.jpg" alt="Волонтерство на 'Лыжне-2025' спортивная база 'Динамо'" class="gallery-img">
+                    <img src="галерея/фото 8.jpg" alt="Уборка на территории колледжа" class="gallery-img">
+                    <img src="галерея/фото 9.jpg" alt="Волонтерство: Весёлые старты-старт дан!" class="gallery-img">
+                    <img src="галерея/фото 10.jpg" alt="Волонтерство: Весёлые старты-старт дан!" class="gallery-img">
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <h2>Контакты</h2>
+            <div class="contact-info">
+                <p><i class="fas fa-phone-alt"></i> Телефон: <a href="tel:+79146056117">+7 (914) 605-61-17</a></p>
+                <p><i class="fas fa-envelope"></i> Email: <a href="mailto:stepbss@mail.ru">stepbss@mail.ru</a></p>
+                <p><i class="fab fa-telegram"></i> Telegram: <a href="https://t.me/stepbss" target="_blank">t.me/stepbss</a></p>
+                <p><i class="fab fa-vk"></i> ВКонтакте: <a href="https://vk.com/stepbss" target="_blank">vk.com/stepbss</a></p>
+            </div>
+        </section>
+    </main>
+
+    <button id="scrollToTopBtn" title="Наверх"><i class="fas fa-chevron-up"></i></button>
+
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="caption"></div>
+    </div>
+
+    <script>
+        // Плавная прокрутка для навигации
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Обновляем активную ссылку в навигации
+                    document.querySelectorAll('nav a').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                }
+            });
+        });
+        
+        // Переключение вкладок 1-2 курс
+        document.getElementById('firstCourseBtn').addEventListener('click', function() {
+            document.querySelectorAll('.course-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll('.course-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById('firstCourseContent').classList.add('active');
+            this.classList.add('active');
+        });
+        
+        document.getElementById('secondCourseBtn').addEventListener('click', function() {
+            document.querySelectorAll('.course-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll('.course-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById('secondCourseContent').classList.add('active');
+            this.classList.add('active');
+        });
+        
+        // Кнопка "Наверх"
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.style.display = 'block';
+            } else {
+                scrollToTopBtn.style.display = 'none';
+            }
+            
+            // Обновляем активную ссылку в навигации при прокрутке
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('nav a');
+            
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (scrollY >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        scrollToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Модальное окно для изображений
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const captionText = document.getElementById('caption');
+        const closeModal = document.querySelector('.close');
+        
+        document.querySelectorAll('.gallery-img').forEach(img => {
+            img.addEventListener('click', function() {
+                modal.style.display = 'block';
+                modalImg.src = this.src;
+                captionText.textContent = this.alt;
+            });
+        });
+        
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+        
+        window.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // Закрытие модального окна по клавише ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.style.display === 'block') {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
